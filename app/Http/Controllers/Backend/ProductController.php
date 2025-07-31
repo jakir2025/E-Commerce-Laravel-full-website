@@ -86,7 +86,7 @@ class ProductController extends Controller
 
                 $galleryImage->product_id = $product->id;
                 $galleryImageName = rand() .'-galleryImage-'.'.' . $singleImage->extension();
-                $singleImage->move('backend/images/galleryimages/', $galleryImageName);
+                $singleImage->move('/backend/images/galleryimages/', $galleryImageName);
                 $galleryImage->image = $imageName;
                 $galleryImage->save();
             }
@@ -122,20 +122,21 @@ class ProductController extends Controller
             $size->delete();
         }
         // Delete gallery images
+         //GalleryImage Delete...
         $galleryImages = GalleryImage::where('product_id', $product->id)->get();
 
-        foreach ($galleryImages as $galleryImage) {
-            if($galleryImage->image && file_exists('backend/images/galleryimages/' . $galleryImage->image)) {
-                unlink('backend/images/galleryimages/' . $galleryImage->image);
+        foreach($galleryImages as $singleImage){
+
+            if($singleImage->image && file_exists('backend/images/galleryimages/'.$singleImage->image)){
+                unlink('backend/images/galleryimages/'.$singleImage->image);
             }
-            $galleryImage->delete();
+
+            $singleImage->delete();
         }
 
-        //finally delete the product
-          $product->delete();
-        return redirect()->back()->with('success', 'Product deleted successfully');
+        $product->delete();
+        return redirect()->back();
     }
-
     public function productEdit($id)
     {
         $product = Product::where('id', $id)->with('color', 'size', 'galleryImage')->first();
@@ -283,3 +284,4 @@ class ProductController extends Controller
 
   
 }
+

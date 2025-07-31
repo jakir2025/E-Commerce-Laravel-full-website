@@ -16,3 +16,4 @@
 	<!-- Main CSS Link -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/style.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/responsive.css') }}">
+

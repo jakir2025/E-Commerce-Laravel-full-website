@@ -34,7 +34,7 @@
                   <div class="card-header"><div class="card-title">Edit Gallery Details</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{ url('/admin/product/gallery-image/update/' . $galleryImage->id) }}" method="POST" enctype="multipart/form-data">
+                  <form action="{{ url('/admin/product/gallery-image/update/'.$galleryImage->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Body-->
                     <div class="card-body">
@@ -42,7 +42,7 @@
                         <input type="file" class="form-control" name="image" id="image" required/>
                         <label class="input-group-text" for="inputGroupFile02">Upload</label>
                       </div>
-                      <img src="{{ asset('backend/images/galleryimages/' . $galleryImage->image) }}" height="100" width="100" alt="">
+                      <img src="{{ asset('backend/images/galleryimages/'.$galleryImage->image) }}" height="100" width="100" alt="">
                     </div>
                     <!--end::Body-->
                     <!--begin::Footer-->

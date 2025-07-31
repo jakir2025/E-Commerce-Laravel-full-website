@@ -150,7 +150,7 @@
                         <input type="file" class="form-control" name="gallery_image[]" id="gallery_image" multiple/>
                         <label class="input-group-text" for="gallery_image">Upload Gallery Images</label>
                         @foreach ($product->galleryImage as $singleImage)
-                           <img src="{{ asset('backend/images/galleryimages/'.$singleImage->gallery_image) }}" width="100" class="mb-2" height="100" alt="">
+                           <img src="{{ asset('backend/images/galleryImages/'.$singleImage->gallery_image) }}" width="100" class="mb-2" height="100" alt="">
                             <div class="mb-2">
 
                                  <a href="{{ url('/admin/product/gallery-image/delete/'.$singleImage->id) }}" class="btn btn-danger">Remove</a>

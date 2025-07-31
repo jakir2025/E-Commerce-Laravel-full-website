@@ -18,7 +18,7 @@ use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('/shop', [FrontendController::class, 'shopProducts']);
 Route::get('/return-process', [FrontendController::class, 'returnProcess']);
-Route::get('/product-details', [FrontendController::class, 'productDetails']);
+Route::get('/product-details/{slug}', [FrontendController::class, 'productDetails']);
 Route::get('/type-products/{type}', [FrontendController::class, 'typeProducts']);
 Route::get('/view-cart-products', [FrontendController::class, 'viewCart']);
 Route::get('/checkout', [FrontendController::class, 'checkOut']);

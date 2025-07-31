@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class FrontendController extends Controller
 {
     public function index(){
-        $categories = Category::orderBy('name', 'asc')->get();
-
+        $categories = Category::orderBy('name', 'asc')->with('subCategories')->get();
+        //  dd($categories);
         $hotProducts = Product::where('product_type', 'hot') ->orderBy('id' , 'desc')->get();
         $newProducts = Product::where('product_type', 'new') ->orderBy('id', 'desc')->get();
         $regulerProducts = Product::where('product_type', 'reguler') ->orderBy('id', 'desc')->get();
@@ -26,8 +26,11 @@ class FrontendController extends Controller
         return view('frontend.return-process');
 
     }
-    public function productDetails(){
-        return view('frontend.product-details');
+    
+    public function productDetails($slug){
+        $product = Product::where('slug',$slug)->with('color', 'size', 'galleryImage')->first();
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('frontend.product-details', compact('product', 'categories'));
     }
     public function typeProducts($type){
         return view('frontend.type-products', compact('type'));
