@@ -46,7 +46,8 @@
                                          </div>
 
                                         
-                                     <form action="" method="POST">
+                                     <form action="{{url('/product-details/add-to-cart/'.$product->id)}}" method="POST">
+                                        @csrf
 
                                         <div class="product-details-select-items-wrap">
                                              @foreach ($product->color as $singleColor )

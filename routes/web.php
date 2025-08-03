@@ -23,6 +23,10 @@ Route::get('/type-products/{type}', [FrontendController::class, 'typeProducts'])
 Route::get('/view-cart-products', [FrontendController::class, 'viewCart']);
 Route::get('/checkout', [FrontendController::class, 'checkOut']);
 
+// Add to Cart Route---
+Route::post('/product-details/add-to-cart/{product_id}', [FrontendController::class, 'addToCartDetails']);
+Route::post('/add-to-cart/{product_id}', [FrontendController::class, 'addToCart']);
+
 //Policy Routes
 
 Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy']);
