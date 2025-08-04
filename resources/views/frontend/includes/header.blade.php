@@ -1,3 +1,5 @@
+{{-- @dd($cartProducts) --}}
+{{-- @dd($cartProductCount) --}}
 <header class="header-section">
 		<div class="container">
 			<div class="header-top-wrapper">
@@ -18,22 +20,32 @@
 						<div class="header-top-right-item-link">
 							<span class="icon-outer">
 								<i class="fas fa-cart-plus"></i>
-								<span class="count-number">1</span>
+								<span class="count-number">{{$cartProductCount}}</span>
 							</span>
 							Cart
 						</div>
 						<div class="cart-items-wrapper">
+							@php
+								$totalPrice = 0
+							@endphp
+
+							@foreach ($cartProducts as $cart)
+
+							@php
+							$totalPrice = $totalPrice + $cart->qty*$cart->price;
+							@endphp
+
 							<div class="cart-items-outer">
 								<div class="cart-item-outer">
-									<a href="#" class="cart-product-image">
-										<img src="{{ asset('frontend/images/product.png') }}" alt="product">
+									<a href="{{url('product-details/'.$cart->product->slug)}}" class="cart-product-image">
+										<img src="{{ asset('backend/images/products/'.$cart->product->image) }}" alt="product">
 									</a>
 									<div class="cart-product-name-price">
-										<a href="#" class="product-name">
-											Test Product
+										<a href="{{url('product-details/'.$cart->product->slug)}}" class="product-name">
+											{{$cart->product->name}} X {{$cart->qty}}
 										</a>
 										<span class="product-price">
-											৳ 300
+											৳ {{$cart->price}}
 										</span>
 									</div>
 									<div class="cart-item-delete">
@@ -43,10 +55,11 @@
 									</div>
 								</div>
 							</div>
+							@endforeach
 							<div class="shopping-cart-footer">
 								<div class="shopping-cart-total">
 									<h4>
-										Total <span>৳ 300</span>
+										Total <span>৳ {{$totalPrice }}</span>
 									</h4>
 								</div>
 								<div class="shopping-cart-button">
