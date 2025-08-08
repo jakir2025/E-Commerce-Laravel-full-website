@@ -10,14 +10,16 @@
 						<ul class="header__category-list">
 							@foreach ($categories as $category )
 								<li class="header__category-list-item item-has-submenu">
-								<a href="category-product.html" class="header__category-list-item-link">
+								{{-- <a href="category-product.html" class="header__category-list-item-link"> --}}
+									<a href="{{ url('category-products/'.$category->slug) }}" class="header__category-list-item-link">
 									<img src="{{ asset('backend/images/category/'.$category->image) }}" alt="category">
 									  {{ $category->name }}
 								</a>
 								<ul class="header__nav-item-category-submenu">
 									@foreach ($category->subCategories as $subCategory )
 										<li class="header__category-submenu-item">
-										<a href="sub-category-product.html" class="header__category-submenu-item-link">
+										{{-- <a href="sub-category-product.html" class="header__category-submenu-item-link"> --}}
+											<a href="{{ url('sub-category-products/'.$subCategory->slug) }}" class="header__category-submenu-item-link">
 											{{ $subCategory->name }}
 										</a>
 									</li>
@@ -100,7 +102,9 @@
                     @foreach ($hotProducts as $product )
 						<div class="product__item-outer">
 						   <div class="product__item-image-outer">
-							<a href="{{ url('product-details/'.$product->slug) }}" class="product__item-image-inner">
+							{{-- <a href="{{ url('product-details/'.$product->slug) }}" class="product__item-image-inner"> --}}
+								<a href="{{ url('product-details/'.$product->slug) }}" class="product__item-image-inner">
+
 								<img src="{{ asset('backend/images/products/'.$product->image) }}" alt="Product Image" />
 							</a>
 							<div class="product__item-add-cart-btn-outer">

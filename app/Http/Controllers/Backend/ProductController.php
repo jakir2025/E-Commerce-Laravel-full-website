@@ -87,7 +87,7 @@ class ProductController extends Controller
                 $galleryImage->product_id = $product->id;
                 $galleryImageName = rand() .'-galleryImage-'.'.' . $singleImage->extension();
                 $singleImage->move('/backend/images/galleryimages/', $galleryImageName);
-                $galleryImage->image = $imageName;
+                $galleryImage->image = $galleryImageName;
                 $galleryImage->save();
             }
         }

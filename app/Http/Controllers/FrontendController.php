@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,7 @@ class FrontendController extends Controller
         //  dd($categories);
         $hotProducts = Product::where('product_type', 'hot') ->orderBy('id' , 'desc')->get();
         $newProducts = Product::where('product_type', 'new') ->orderBy('id', 'desc')->get();
-        $regulerProducts = Product::where('product_type', 'reguler') ->orderBy('id', 'desc')->get();
+        $regulerProducts = Product::where('product_type', 'regular') ->orderBy('id', 'desc')->get();
         $discountProducts = Product::where('product_type', 'discount') ->orderBy('id', 'desc')->get();
         
         return view('frontend.index', compact('hotProducts', 'newProducts', 'regulerProducts', 'discountProducts', 'categories'));
@@ -137,15 +139,100 @@ class FrontendController extends Controller
         }
     }
 
+    public function addToCartDelete($id)
+{
+    $cart = Cart::find($id);
+
+    if ($cart) {
+        $cart->delete();
+        return redirect()->back()->with('success', 'Item removed from cart.');
+    } else {
+        return redirect()->back()->with('error', 'Cart item not found.');
+    }
+}
+
+
+    // public function addToCartDelete($id)
+    // {
+    //     $cart = Cart::find($id);
+
+    //     $cart->delete();
+    //     return redirect()->back();
+    // }
+    
 
     public function typeProducts($type){
         return view('frontend.type-products', compact('type'));
     }
     public function viewCart(){
+
         return view('frontend.view-cart');
     }
+
     public function checkOut(){
         return view('frontend.checkout');
+    }
+
+    public function confirmOrder(Request $request)
+    {
+        $order = new Order();
+
+        $order->ip_address = $request->ip();
+
+        $previousOrder = Order::orderBy('id', 'desc')->first();
+
+        if($previousOrder == null){
+            $generateInvoice = "XWZ-01";
+            $order->invoice_number = $generateInvoice;
+
+        }
+        elseif($previousOrder != null){
+            $generateInvoice = "XWZ-".$previousOrder->id+1;
+            $order->invoice_number = $generateInvoice;
+
+        }
+
+        // $order->invoice_number = "XWZ-01";
+        $order->name = $request->name;
+        $order->phone = $request->phone;
+        $order->address = $request->address;
+        $order->charge = $request->charge;
+        $order->price = $request->inputGrandTotal;
+
+        $cartProducts = Cart::where('ip_address', $request->ip())->get();
+
+        if($cartProducts->isNotEmpty()){
+            $order->save();
+
+            foreach($cartProducts as $cart){
+                $orderDetails = new OrderDetails();
+
+                $orderDetails->order_id = $order->id;
+                $orderDetails->product_id = $cart->product_id;
+                $orderDetails->color = $cart->color;
+                $orderDetails->size = $cart->size;
+                $orderDetails->qty = $cart->qty;
+                $orderDetails->price = $cart->price;
+
+                $orderDetails->save();
+                $cart->delete();
+                
+
+            }
+
+            return redirect('success-order/'.$generateInvoice);
+
+        }
+        else{
+            return redirect('/');
+        }
+
+
+    }
+
+    public function successOrder ($invoiceid)
+    {
+        return view('frontend.thankyou', compact('invoiceid'));
     }
 
     // Policy 
