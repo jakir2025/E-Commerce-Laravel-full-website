@@ -14,7 +14,7 @@
                                         <div class="slider slider-content">
                                                  @foreach ($product->galleryImage as $image)
                                             <div>
-                                                <img src="{{ asset('backend/images/galleryimages/'.$image->image) }}"
+                                                <img src="{{asset('backend/images/galleryimages/'.$image->image)}}"
                                                     alt="slider images">
                                             </div>
                                         @endforeach

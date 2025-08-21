@@ -58,6 +58,7 @@ class CategoryController extends Controller
 
         // dd($category);
         $category->delete();
+         toastr()->success('Data has been saved successfully!');
         return redirect()->back();
     }
     public function categoryEdit($id)
@@ -82,6 +83,7 @@ class CategoryController extends Controller
         }
 
         $category->save();
+         toastr()->success('Data has been saved successfully!');
         return redirect('/admin/category/list');
     }
 }

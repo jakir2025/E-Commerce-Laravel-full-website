@@ -7,7 +7,9 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
+
 
 class FrontendController extends Controller
 {
@@ -21,9 +23,26 @@ class FrontendController extends Controller
         
         return view('frontend.index', compact('hotProducts', 'newProducts', 'regulerProducts', 'discountProducts', 'categories'));
     }
+    public function categoryProducts($slug, $id)
+    {
+        $category = Category::find($id);
+        $products = Product::where('cat_id', $id)->get();
+        $productsCount = Product::where('cat_id', $id)->count();
+        return view('frontend.categoryProducts', compact('products', 'productsCount', 'category'));
+    }
+    public function subCategoryProducts($slug, $id)
+    {
+        $subCategory = SubCategory::find($id);
+        $products = Product::where('sub_cat_id', $id)->get();
+        $productsCount = Product::where('sub_cat_id', $id)->count();
+        return view('frontend.subcategory-products', compact('subCategory', 'products', 'productsCount'));
+    }
 
-    public function shopProducts(){
-        return view('frontend.shop');
+    public function shopProducts()
+    {
+        $products = Product::orderBy('id', 'desc')->get();
+        $productsCount = Product::orderBy('id', 'desc')->count();
+        return view('frontend.shop', compact('productsCount', 'products'));
     }
     public function returnProcess(){
         return view('frontend.return-process');
@@ -119,6 +138,7 @@ class FrontendController extends Controller
             }
 
             $cart->save();
+            toastr()->success('Data has been saved successfully!');
             return redirect()->back();
 
         }
@@ -134,6 +154,7 @@ class FrontendController extends Controller
             }
 
             $cartProduct->save();
+            toastr()->success('Data has been saved successfully!');
             return redirect()->back();
 
         }
