@@ -43,6 +43,10 @@ Route::get('/refund-policy', [FrontendController::class, 'refundPolicy']);
 Route::get('/payment-policy', [FrontendController::class, 'paymentPolicy']);
 Route::get('/about-us', [FrontendController::class, 'aboutUs']);
 
+//product searching....
+Route::get('/search-products', [FrontendController::class, 'searchProduct']);
+
+
 //admin auth routes
 Route::get('/admin/login', [AdminAuthController::class, 'loginForm']);
 Route::get('/admin/logout', [AdminAuthController::class, 'logoutAdmin']);
