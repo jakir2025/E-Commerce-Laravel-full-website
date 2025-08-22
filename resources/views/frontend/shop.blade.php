@@ -15,12 +15,12 @@
                                     <span>categories</span>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
-                                <form class="filter-items" id="collapseOne" action="" method="GET">  
+                                <form class="filter-items" id="collapseOne" action="{{url('/shop')}}" method="GET">  
                                     @csrf                                  
                                     @foreach ($generalCategory as $category)
                                          <div class="item-label">
                                         <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
+                                            <input type="checkbox" value="{{$category->id}}" id="cat_id" name="cat_id" onclick="formSubmitCategory()" class="checkbox" />
                                             <span>{{$category->name}}</span>
                                         </label>
                                     </div>
@@ -32,11 +32,12 @@
                                     <span>sub categories</span>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
-                                <form class="filter-items" id="collapseTwo" action="" method="GET">
+                                <form class="filter-items" id="collapseTwo" action="{{url('/shop')}}" method="GET">
+                                    @csrf
                                       @foreach ($generalSubCategories as $subCategory)
                                         <div class="item-label">
                                         <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
+                                            <input type="checkbox" value="{{$subCategory->id}}" id="sub_cat_id" name="sub_cat_id" onclick="formSubmitSubCategory()" class="checkbox" />
                                             <span>
                                                 {{$subCategory->name}}
                                             </span>
@@ -106,3 +107,15 @@
         </section> 
 
 @endsection
+
+@push('script')
+    <script>
+        function formSubmitCategory(){
+            document.getElementById('collapseOne').submit();
+        }
+
+        function formSubmitSubCategory(){
+            document.getElementById('collapseTwo').submit();
+        }
+    </script>
+@endpush

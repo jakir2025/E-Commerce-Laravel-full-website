@@ -31,7 +31,7 @@
 					</div>
 					<div class="home__slider-items-wrapper">
 						<div class="home__slider-item-outer">
-							<img src="{{asset('frontend/images/slider.jpg')}}" alt="image" class="home__slider-item-image">
+							<img src="{{asset('backend/images/Settings/'.$siteSettings->hero_image)}}" alt="image" class="home__slider-item-image">
 						</div>
 					</div>
 				</div>
@@ -173,7 +173,7 @@
 							</div>
 						</div>
 						<div class="product__item-info-outer">
-							<a href="#" class="product__item-name">
+							<a href="{{url('product-details/'.$product->slug)}}" class="product__item-name">
 								{{$product->name }}
 							</a>
 							            <div class="product__item-price-outer">
@@ -228,7 +228,7 @@
 							</div>
 						</div>
 						<div class="product__item-info-outer">
-							<a href="#" class="product__item-name">
+							<a href="{{url('product-details/'.$product->slug)}}" class="product__item-name">
 								{{ $product->name }}
 							</a>
 							            <div class="product__item-price-outer">
@@ -269,7 +269,7 @@
 						<div class="product__item-outer">
 						<div class="product__item-image-outer">
 							<a href="{{url('product-details/'.$product->slug)}}" class="product__item-add-cart-btn-inner">image-inner">
-								<img src="{{asset('backend/images/products/'.$product->image) }}" alt="Product Image" />
+								<img src="{{asset('backend/images/products/'.$product->image)}}" alt="Product Image" />
 							</a>
 							<div class="product__item-add-cart-btn-outer">
 								<a href="{{url('add-to-cart/'.$product->id)}}" class="product__item-add-cart-btn-inner">
@@ -283,7 +283,7 @@
 							</div>
 						</div>
 						<div class="product__item-info-outer">
-							<a href="#" class="product__item-name">
+							<a href="{{url('product-details/'.$product->slug)}}" class="product__item-name">
 								{{$product->name}}
 							</a>
 							<div class="product__item-price-outer">
