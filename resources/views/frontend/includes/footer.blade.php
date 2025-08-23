@@ -2,7 +2,7 @@
 		<div class="footer__top-wrapper">
 			<div class="container">
 				<a href="index.html" class="footer__brand-logo-outer">
-					<img src="{{ asset('frontend/images/logo.png') }}" class="footer__brand-logo-inner" />
+					<img src="{{asset('backend/images/Settings/'.$siteSettings->logo)}}" class="footer__brand-logo-inner" />
 				</a>
 			</div>
 		</div>    
@@ -87,7 +87,7 @@
 										Contact Us
 									</a>
 								</li>
-								<li class="footer__list-item">
+								{{-- <li class="footer__list-item">
 									<a href="#" class="footer__list-item-link">
 										Blog
 									</a>
@@ -96,7 +96,7 @@
 									<a href="#" class="footer__list-item-link">
 										Careers
 									</a>
-								</li>
+								</li> --}}
 							</ul>
 						</div>
 					</div>

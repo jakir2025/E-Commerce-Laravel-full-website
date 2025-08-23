@@ -66,6 +66,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         return view('backend.category.edit', compact('category'));
     }
+
     public function categoryUpdate(Request $request, $id)
     {
         $category = Category::findOrFail($id);
@@ -74,11 +75,14 @@ class CategoryController extends Controller
         $category->slug = Str::slug($request->name);
 
         if(isset($request->image)){
+
             if($category->image && file_exists('backend/images/category/'.$category->image)){
                 unlink('backend/images/category/'.$category->image);
             }
+
             $imageName = rand().'-category'.'.'.$request->image->extension();
             $request->image->move('backend/images/category/', $imageName);
+            
             $category->image = $imageName;
         }
 

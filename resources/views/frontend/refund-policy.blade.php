@@ -6,7 +6,7 @@
             <div class="privacy-policy-heading-wrapper">
                 <div class="section-heading-outer">
                     <h4 class="section-heading-inner">
-                        Privacy Policy
+                        Refund Policy
                     </h4>
                 </div>
             </div>

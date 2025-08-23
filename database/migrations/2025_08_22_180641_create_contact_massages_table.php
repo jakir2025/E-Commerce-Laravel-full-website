@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('policies', function (Blueprint $table) {
+        Schema::create('contact_massages', function (Blueprint $table) {
             $table->id();
-            $table->longText('privacy_policy');
-            $table->longText('terms_conditions');
-            $table->longText('refund_policy');
-            $table->longText('payment_policy');
-            $table->longText('return_policy');
-            $table->longText('about_us');
+            $table->string('name');
+            $table->string('phone');
+            $table->string('email');
+            $table->longText('message');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('policies');
+        Schema::dropIfExists('contact_massages');
     }
 };

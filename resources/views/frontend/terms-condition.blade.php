@@ -6,7 +6,7 @@
             <div class="privacy-policy-heading-wrapper">
                 <div class="section-heading-outer">
                     <h4 class="section-heading-inner">
-                        Privacy Policy
+                        Terms & Condition
                     </h4>
                 </div>
             </div>

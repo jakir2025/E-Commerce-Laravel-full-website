@@ -19,7 +19,8 @@ class PolicySeeder extends Seeder
             'terms_conditions'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit-2',
             'refund_policy'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit-3',
             'payment_policy'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit-4',
-            'about_us'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit-5',
+            'return_policy'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit-5',
+            'about_us'=> 'Lorem ipsum dolor sit amet consectetur adipisicing elit-6',
             ]
         ];
         Policy::insert($policies);
