@@ -21,7 +21,7 @@ return new class extends Migration
             $table->longText('address')->nullable();
             $table->integer('charge')->default(80);
             $table->string('courier_name')->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status')->default('pending')->comment('pending', 'confirmed', 'delivered', 'cancelled', 'returned');
             $table->string('tracking_code')->nullable();
             $table->string('consignment_id')->nullable();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\ContactMassage;
 use App\Models\Policy;
 use App\Models\Settings;
 use Illuminate\Http\Request;
@@ -94,7 +95,6 @@ class SettingsController extends Controller
     public function editBanner($id)
     {
         $banner = Banner::find($id);
-        dd($banner);
         return view('backend.settings.edit-banner', compact('banner'));
     }
 
@@ -116,5 +116,22 @@ class SettingsController extends Controller
         $banner->save();
         toastr()->success("Banner update successfuly!");
         return redirect('admin/show-banner');
+    }
+
+    //contact message
+
+    public function showContactMessage()
+    {
+        $messages = ContactMassage::paginate(20);
+        return view('backend.settings.show-contacts', compact('messages'));
+    }
+
+    public function deleteContactMessage($id)
+    {
+        $message = ContactMassage::find($id);
+        $message->delete();
+
+        toastr()->success('Deleted Successfully');
+        return redirect()->back();
     }
 }

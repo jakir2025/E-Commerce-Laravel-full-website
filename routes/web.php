@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -98,10 +99,20 @@ Route::get('/admin/policies', [SettingsController::class, 'showPolicies']);
 Route::post('/admin/policies/update/', [SettingsController::class, 'updatePolicies']);
 //banner---
 Route::get('/admin/show-banner', [SettingsController::class, 'showBanners']);
-Route::get('/admin/edit-banner/(id)', [SettingsController::class, 'editBanner']);
-Route::post('/admin/update-banner/(id)', [SettingsController::class, 'updateBanner']);
+Route::get('/admin/edit-banner/{id}', [SettingsController::class, 'editBanner']);
+Route::post('/admin/update-banner/{id}', [SettingsController::class, 'updateBanner']);
 
+//contact message---
+Route::get('/admin/contact-message/list', [SettingsController::class, 'showContactMessage']);
+Route::get('/admin/contact-message/delete/{id}', [SettingsController::class, 'deleteContactMessage']);
 
+//Order----
+Route::get('/admin/orders/all', [OrderController::class, 'showOrders']);
+Route::get('/admin/order/status/{id}', [OrderController::class, 'updateOrderStatus']);
+Route::get('/admin/order/delete/{id}', [OrderController::class, 'deleteOrder']);
+//order details---
+Route::get('/admin/order/edit/{id}', [OrderController::class, 'editOrder']);
+Route::post('/admin/order/update/{id}', [OrderController::class, 'updateOrder']);
 
 
 
