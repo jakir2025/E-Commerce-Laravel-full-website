@@ -27,7 +27,7 @@
             <!--begin::Row-->
             <div class="row g-4">
               <!--begin::Col-->
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="{{url('/admin/order/update/'.$order->id)}}" method="post" enctype="multipart/form-data">
             @csrf
              <div class="col-md-6">
                 <!--begin::Quick Example-->
@@ -41,35 +41,39 @@
                       <div class="row">
                       <div class="mb-3 col-md-12">
                         <label for="exampleInputEmail1" class="form-label">Invoice Number</label>
-                        <input type="text" class="form-control" value="xwz-1" name="name" id="name" readonly/>
+                        <input type="text" class="form-control" value="{{$order->invoice_number}}" name="invoice_number" id="invoice_number" readonly/>
                       </div>
 
                        <div class="mb-3 col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Customer Name*</label>
-                        <input type="text" class="form-control" value="Customer name" name="name" id="name" required/>
+                        <input type="text" class="form-control" value="{{$order->name}}" name="name" id="name" required/>
                       </div>
 
                        <div class="mb-3 col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Customer Phone*</label>
-                        <input type="text" class="form-control" value="+8801747-909324" name="name" id="name" required/>
+                        <input type="text" class="form-control" value="{{$order->phone}}" name="phone" id="phone" required/>
                       </div>
 
                        <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Delivery Charge*</label>
-                        <input type="number" class="form-control" value="80" name="name" id="name" required/>
+                        <input type="number" class="form-control" value="{{$order->charge}}" name="charge" id="charge" required/>
                       </div>
 
                        <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Customer Address*</label>
-                        <textarea class="form-control" name="address" id="address">New Market,Chittagang</textarea>
+                        <textarea class="form-control" name="address" id="address">{{$order->address}}</textarea>
                       </div>
 
                       <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Courier*</label>
                         <select name="courier_name" id="courier_name" class="form-control">
-                            <option value="" selected disabled>Select Courier</option>
-                            <option value="steadfast">Steadfast</option>
-                            <option value="pathao">Pathao</option>
+                            <option disabled >Select Courier</option>
+                            <option value="steadfast" @if ($order->courier_name == "steadfast")
+                              selected
+                            @endif>Steadfast</option>
+                            <option value="pathao" @if ($order->courier_name == "pathao")
+                              selected
+                            @endif>Pathao</option>
                         </select>
                       </div>
                       </div>
@@ -87,24 +91,35 @@
                 <div class="card card-primary card-outline mb-4">
                   <!--begin::Header-->
                   <div class="card-header"><div class="card-title">Product Details</div></div>
-                  <!--end::Header-->
-                  <!--begin::Form-->
-                    <!--begin::Body-->
                     <div class="card-body">
-                      <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Product Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="name"
-                          id="name"
-                          required
-                        />
+                      <div class="mb-5">
+                        <div class="row">
+                          <div class="col-md-4">
+                          <img src="https://placehold.co/100x100" height="100" width="100" alt=""><br>
+                             Text Product
+                        </div>
+                        <div class="col-md-8">
+                          <label for="">Quantity</label><input type="number" class="form-control" name="qty" id="" value="1">
+                          <label for="">Color</label><input type="text" class="form-control" name="color" id="" value="red">
+                          <label for="">Size</label><input type="text" class="form-control" name="size" id="" value="m">
+                        </div>
+                        </div>
                       </div>
-                      <div class="input-group mb-3">
-                        <input type="file" class="form-control" name="image" id="image" required/>
-                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+
+                       <div class="mb-5">
+                        <div class="row">
+                          <div class="col-md-4">
+                          <img src="https://placehold.co/100x100" height="100" width="100" alt=""><br>
+                             Text Product
+                        </div>
+                        <div class="col-md-8">
+                          <label for="">Quantity</label><input type="number" class="form-control" name="qty" id="" value="1">
+                          <label for="">Color</label><input type="text" class="form-control" name="color" id="" value="red">
+                          <label for="">Size</label><input type="text" class="form-control" name="size" id="" value="m">
+                        </div>
+                        </div>
                       </div>
+                      <label for="">Total Price</label><input type="number" class="form-control" name="price" id="" value="1200">
                     </div>
                     <!--end::Body-->
                     <!--begin::Footer-->

@@ -58,6 +58,7 @@ class OrderController extends Controller
 
     public function editOrder($id)
     {
-        return view('backend.order.edit-orders');
+        $order = Order::with('orderDetails')->where('id', $id)->first();
+        return view('backend.order.edit-orders', compact('order'));
     }
 }

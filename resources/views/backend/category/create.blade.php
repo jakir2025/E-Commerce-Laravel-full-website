@@ -34,7 +34,7 @@
                   <div class="card-header"><div class="card-title">Input Category Details</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{ url('/admin/category/store') }}" method="POST" enctype="multipart/form-data">
+                  <form action="{{url('/admin/category/store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Body-->
                     <div class="card-body">
