@@ -28,7 +28,7 @@
             <!--begin::Row-->
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{url('/admin/orders/all')}}" method="GET">
+                    <form action="{{url('/admin/orders/'.$status)}}" method="GET">
                     @csrf
                     <div class="row">
                         <div class="col-md-8">
@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-primary">Search</button>
-                            <a href="{{url('/admin/orders/all')}}" class="btn btn-danger">Clear</a>
+                            <a href="{{url('/admin/orders/'.$status)}}" class="btn btn-danger">Clear</a>
                         </div>
                     </div>
                     </form>

@@ -107,7 +107,7 @@ Route::get('/admin/contact-message/list', [SettingsController::class, 'showConta
 Route::get('/admin/contact-message/delete/{id}', [SettingsController::class, 'deleteContactMessage']);
 
 //Order----
-Route::get('/admin/orders/all', [OrderController::class, 'showOrders']);
+Route::get('/admin/orders/{status}', [OrderController::class, 'showOrders']);
 Route::get('/admin/order/status/{id}', [OrderController::class, 'updateOrderStatus']);
 Route::get('/admin/order/delete/{id}', [OrderController::class, 'deleteOrder']);
 //order details---
