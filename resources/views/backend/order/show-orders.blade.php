@@ -67,13 +67,13 @@
                       </thead>
 
                       <tbody>
-                @foreach ($orders as $order )
+                   @foreach($orders as $order )
                      <tr>
                         <td>{{$loop->index+1}}</td>
                         <td>{{$order->created_at}}</td>
                         <td>{{$order->invoice_number}}</td>
                         <td>
-                           @foreach ($order->orderDetails as $details)
+                           @foreach($order->orderDetails as $details)
                             <img src="{{asset('backend/images/products/'.$details->product->image)}}" height="100" width="100" alt="">
                              {{$details->product->image}} X {{$details->qty}} <br>
                            @endforeach
@@ -91,6 +91,7 @@
                         <td>
                             {{$order->courier_name??"Courier Not Selected"}}
                             <p class="text-success">{{$order->consignment_id}}</p>
+                            <a href="{{url('/admin/order-courier-entry/'.$order->id)}}" class=" btn btn-success">Entry Courier</a>
                         </td>
                         {{-- <td>
                             <form action="{{url('/admin/order/status/'.$order->id)}}" method="GET" id="statusUpdate{{$order->id}}">
