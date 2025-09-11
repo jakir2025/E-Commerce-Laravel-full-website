@@ -27,7 +27,7 @@
             <!--begin::Row-->
             <div class="row g-4">
               <!--begin::Col-->
-        <form action="{{url('/admin/order/update/'.$order->id)}}" method="post" enctype="multipart/form-data">
+        <form action="{{url('/admin/order/update/'.$order->id)}}" method="post" ectype="multipart/form-data">
             @csrf
              <div class="col-md-6">
                 <!--begin::Quick Example-->

@@ -11,116 +11,136 @@ use PhpParser\Node\Stmt\Return_;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
+
+  public function showOrders(Request $request, $status)
+  {
+    if (isset($request->search) && $status == 'all') {
+      $orders = Order::with('orderDetails')
+        ->where('phone', 'LIKE', '%' . $request->search . '%')
+        ->orWhere('invoice_number', 'LIKE', '%' . $request->search . '%')
+        ->orWhere('name', 'LIKE', '%' . $request->search . '%')
+        ->paginate(50);
+    } else if (isset($request->search)  && $status != 'all') {
+      $orders = Order::with('orderDetails')
+        ->where('status', $status)
+        ->where('phone', 'LIKE', '%' . $request->search . '%')
+        ->orWhere('invoice_number', 'LIKE', '%' . $request->search . '%')
+        ->orWhere('name', 'LIKE', '%' . $request->search . '%')
+        ->paginate(50);
+    } else {
+      if ($status == 'all') {
+        $orders = Order::with('orderDetails')->paginate(50);
+      } else {
+        $orders = Order::with('orderDetails')->where('status', $status)->paginate(50);
+      }
+    }
+    // $orders = Order::with('orderDetails')->paginate(50);
+    return view('backend.order.show-orders', compact('orders', 'status'));
+  }
+
+  public function updateOrderStatus(Request $request, $id)
+  {
+
+    $order = Order::find($id);
+    $order->status = $request->status;
+
+    $order->save();
+    return redirect()->back();
+  }
+
+  public function deleteOrder($id)
+  {
+    $order = Order::find($id);
+    $orderDetails = OrderDetails::where('order_id', $id)->get();
+
+    foreach ($orderDetails as $Details) {
+      $Details->delete();
     }
 
-    public function showOrders(Request $request, $status)
-    {
-         if(isset($request->search) && $status == 'all'){
-           $orders = Order::with('orderDetails')
-           ->where('phone', 'LIKE', '%'.$request->search.'%')
-           ->orWhere('invoice_number', 'LIKE', '%'.$request->search.'%')
-           ->orWhere('name', 'LIKE', '%'.$request->search.'%')
-           ->paginate(50);
-         }
+    $order->delete();
+    toastr()->success('Order deleted successfully');
+    return redirect()->back();
+  }
 
-       else if(isset($request->search)  && $status != 'all'){
-           $orders = Order::with('orderDetails')
-           ->where('status', $status)
-           ->where('phone', 'LIKE', '%'.$request->search.'%')
-           ->orWhere('invoice_number', 'LIKE', '%'.$request->search.'%')
-           ->orWhere('name', 'LIKE', '%'.$request->search.'%')
-           ->paginate(50);
-         }
-        else{
-           if($status == 'all'){
-             $orders = Order::with('orderDetails')->paginate(50);
-           }
-           else{
-             $orders = Order::with('orderDetails')->where('status', $status)->paginate(50);
-           }
-        }
-         // $orders = Order::with('orderDetails')->paginate(50);
-        return view('backend.order.show-orders', compact('orders', 'status'));
-    }
-
-    public function updateOrderStatus(Request $request, $id)
-    {
-
-        $order = Order::find($id);
-        $order->status = $request->status;
-
-        $order->save();
-        return redirect()->back();
-    }
-
-    public function deleteOrder($id)
-    {
-        $order = Order::find($id);
-        $orderDetails = OrderDetails::where('order_id', $id)->get();
-       
-        foreach($orderDetails as $Details){
-            $Details->delete();
-        }
-
-        $order->delete();
-        toastr()->success('Order deleted successfully');
-        Return redirect()->back();
-
-    }
-
-    public function editOrder($id)
-    {
-        $order = Order::with('orderDetails')->where('id', $id)->first();
-        return view('backend.order.edit-orders', compact('order'));
-    }
+  public function editOrder($id)
+  {
+    $order = Order::with('orderDetails')->where('id', $id)->first();
+    return view('backend.order.edit-orders', compact('order'));
+  }
 
 
-    //courier
+  public function updateOrder(Request $request, $id)
+  {
+    $order = Order::find($id);
 
-    public function courierEntry($order_id)
-    {
+    $order->name = $request->name;
+    $order->phone = $request->phone;
+    $order->charge = $request->charge;
+    $order->address = $request->address;
+    $order->courier_name = $request->courier_name;
+    $order->price = $request->price;
+
+    $order->save();
+    toastr()->success("Updated successfully!");
+    return redirect()->back();
+  }
 
 
-      $order = Order::find($order_id);
-     // dd($order);
+  //courier
 
-      $apiEndpoint = "https://portal.packzy.com/api/v1/create_order";
+  public function courierEntry($order_id)
+  {
 
-      $header = [
-        'Api-Key' => "eieihds2wtudp5ao3jbz4ptasni4ha54",
-        'Secret-Key' => "7g7etlte9j5vymatazuq5tzl",
-        'Content-Type' => "application/json"
-      ];
 
-      //body parameters--
-      $invoiceNumber = $order->invoice_number;
-      $customerName = $order->name;
-      $customerPhone = $order->phone;
-      $customerAddress = $order->address;
-      $amount = $order->price;
+    $order = Order::find($order_id);
+    // dd($order);
 
-      $payload = [
-         'invoice' => $invoiceNumber,
-         'recipient_name' => $customerName,
-         'recipient_phone' => $customerPhone,
-         'recipient_address' => $customerAddress,
-         'cod_amount' => $amount,
-      ];
+   if($order->courier_name == "steadfast"){
+     $apiEndpoint = "https://portal.packzy.com/api/v1/create_order";
 
-      $response = Http::withHeaders($header)->post($apiEndpoint, $payload);
-       $jsonData = $response -> json();
-     // dd($jsonData);
+    $header = [
+      'Api-Key' => "eieihds2wtudp5ao3jbz4ptasni4ha54",
+      'Secret-Key' => "7g7etlte9j5vymatazuq5tzl",
+      'Content-Type' => "application/json"
+    ];
 
-     if(isset($jsonData['consignment'])){
+    //body parameters--
+    $invoiceNumber = $order->invoice_number;
+    $customerName = $order->name;
+    $customerPhone = $order->phone;
+    $customerAddress = $order->address;
+    $amount = $order->price;
+
+    $payload = [
+      'invoice' => $invoiceNumber,
+      'recipient_name' => $customerName,
+      'recipient_phone' => $customerPhone,
+      'recipient_address' => $customerAddress,
+      'cod_amount' => $amount,
+    ];
+
+    $response = Http::withHeaders($header)->post($apiEndpoint, $payload);
+    $jsonData = $response->json();
+    // dd($jsonData);
+
+    if (isset($jsonData['consignment'])) {
       $order->tracking_code = $jsonData['consignment']['tracking_code'];
       $order->consignment_id = $jsonData['consignment']['consignment_id'];
 
       $order->save();
-     }
-
-     return redirect()->back();
     }
+   }
+
+   elseif($order->courier_name == "pathao"){
+
+   }
+
+   toastr()->success("Courier entry is Successfull");
+
+    return redirect()->back();
+  }
 }
